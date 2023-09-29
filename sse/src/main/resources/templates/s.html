@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SSE Demo</title>
+</head>
+<body>
+<h1>SSE Demo</h1>
+<div id="message-container"></div>
+
+<script>
+    // 创建一个EventSource对象，指定SSE的服务端端点
+    var eventSource = new EventSource('/subscribe');
+    console.log("eventSource=", eventSource)
+    // 监听message事件，接收从服务端发送的消息
+    eventSource.addEventListener('message', function(event) {
+        var message = event.data;
+        console.log("message=", message)
+        var messageContainer = document.getElementById('message-container');
+        messageContainer.innerHTML += '<p>' + message + '</p>';
+    });
+</script>
+</body>
+</html>

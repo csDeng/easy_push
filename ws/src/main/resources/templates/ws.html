@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Demo</title>
+</head>
+<body>
+<h1>WebSocket Demo</h1>
+<div id="message-container"></div>
+
+<script>
+    // 创建WebSocket对象，并指定服务器的URL
+    var socket = new WebSocket('ws://localhost:8080/websocket');
+
+    // 监听WebSocket的连接事件
+    socket.onopen = function(event) {
+        console.log('WebSocket connected');
+    };
+
+    // 监听WebSocket的消息事件
+    socket.onmessage = function(event) {
+        var message = event.data;
+        var messageContainer = document.getElementById('message-container');
+        messageContainer.innerHTML += '<p>' + message + '</p>';
+    };
+
+    // 监听WebSocket的关闭事件
+    socket.onclose = function(event) {
+        console.log('WebSocket closed');
+    };
+
+    // 发送消息到服务器
+    function sendMessage() {
+        var messageInput = document.getElementById('message-input');
+        var message = messageInput.value;
+        socket.send(message);
+        messageInput.value = '';
+    }
+</script>
+
+<input type="text" id="message-input" placeholder="Enter message">
+<button onclick="sendMessage()">Send</button>
+</body>
+</html>

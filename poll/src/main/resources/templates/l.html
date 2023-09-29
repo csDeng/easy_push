@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>短轮询</title>
+</head>
+<body>
+<p>msg=<span id="message"></span></p>
+<p>请求次数：<span id="cnt"></span></p>
+<script>
+    var cnt = 0
+    function pollMessage() {
+// 发送轮询请求
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "/long", true);
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    document.getElementById("message").innerHTML = xhr.responseText;
+                }
+            }
+        };
+
+        xhr.send();
+    }
+
+    setInterval(()=>{
+        ++cnt;
+        document.getElementById('cnt').innerHTML = cnt.toString()
+        pollMessage()
+    }, 5000)
+
+</script>
+</body>
+</html>
+
